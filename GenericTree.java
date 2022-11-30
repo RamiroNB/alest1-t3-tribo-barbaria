@@ -184,15 +184,14 @@ public class GenericTree {
             }
         }
     }
-    //metodo passar terras recursivo que guarda o maior já e retorna
+    
     public Barbaro mostLandLastGen(){
         maiornivel(root);
-        System.out.println(lastGen);
         herda(root);
         findMostLastGen(root);
         return maior;
     }
-    //guardat hight pra saber se é last gen e // guardar maior 
+     
     private void findMostLastGen(TreeNode ref){
         if(ref != null){
             if(ref.nChild==0 &&  ref.getNivel()>lastGen-1){
