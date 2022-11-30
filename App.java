@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class App{
     public static void main(String[] args)throws FileNotFoundException{
         GenericTree tree = new GenericTree();
-        File arq = new File("pergaminho.txt");
+        File arq = new File("pergaminho5.txt");
         Scanner scan = new Scanner(arq);
         ArrayList<Barbaro> barbaros = new ArrayList<>();//apenas utilizado para pegar input
         
