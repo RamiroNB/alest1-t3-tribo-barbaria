@@ -5,12 +5,11 @@ public class GenericTree {
         public Barbaro value;
         private TreeNode[] children;
         private int nChild;
-
+    
         public TreeNode (Barbaro element){
             this.value=element;
             father=null;
             children=new TreeNode[10];
-            nChild=0;
         }
         public void addSubtree (TreeNode n){
             if(n!=null){
@@ -26,6 +25,13 @@ public class GenericTree {
             for(int i=0; i<children.length; i++)
                 aux[i]=children[i];
             children=aux;
+        }
+        public int getNivel(){
+            if(father == null){
+                return 1;
+            }else{
+                return father.getNivel()+1;
+            }
         }
         /* 
         public boolean removeSubtree(TreeNode n){
@@ -45,7 +51,7 @@ public class GenericTree {
     private TreeNode root;
     private int nElements;
     private int lastGen;
-    Barbaro maior = new Barbaro(null, -1000, 0);
+    Barbaro maior = new Barbaro(null, -1000);
 
     public  GenericTree() {
         this.root= null;
@@ -72,7 +78,6 @@ public class GenericTree {
             return null;
         }
     }
-
     public boolean add(Barbaro e, Barbaro father){
         if(nElements==0) // adicionando o elemento raiz
             root=new TreeNode(e);
@@ -83,8 +88,6 @@ public class GenericTree {
             if(aux!=null){
               //tenho de adicionar o e ao pai
               aux.addSubtree(new TreeNode(e));
-              if(e.getGen()>lastGen)
-                lastGen = e.getGen();
             //senao
             }else
               // tenho q informa q não possivel adicionar o filho
@@ -128,9 +131,7 @@ public class GenericTree {
     public boolean isInternal(Integer e){
         return false;
     }
-    public boolean isExternal(Integer e){
-        return false;
-    }
+
     public boolean isRoot(Barbaro e){
         if((root!=null)&&(e!=null)&&(root.value==e))
             return true;
@@ -171,8 +172,22 @@ public class GenericTree {
             printTree(root);
         System.out.println();
     }
+    //acha nivel 
+    private void maiornivel(TreeNode e){
+        if(e!= null){
+            if(e.getNivel()>lastGen)
+                lastGen = e.getNivel();
+            if(e.nChild>0){
+                for (TreeNode child : e.children) {
+                    maiornivel(child);
+                }
+            }
+        }
+    }
     //metodo passar terras recursivo que guarda o maior já e retorna
     public Barbaro mostLandLastGen(){
+        maiornivel(root);
+        System.out.println(lastGen);
         herda(root);
         findMostLastGen(root);
         return maior;
@@ -180,7 +195,7 @@ public class GenericTree {
     //guardat hight pra saber se é last gen e // guardar maior 
     private void findMostLastGen(TreeNode ref){
         if(ref != null){
-            if(ref.children.length==0 && ref.value.getGen()==lastGen){
+            if(ref.nChild==0 &&  ref.getNivel()>lastGen-1){
                 if(ref.value.getTerras()>maior.getTerras()){
                     maior = ref.value;
                 }
@@ -192,18 +207,18 @@ public class GenericTree {
             }
         }
     }
-
+    
     private void herda(TreeNode ref){
         if(ref != null){
-            if(ref.children.length>0){
-                double landToGive  = (ref.value.getTerras())/ref.children.length;
-                for (int i = 0;i<ref.children.length;i++) {
-                    ref.children[i].value.herdaTerraPai(landToGive);
-                    herda(ref.children[i]);
+            if(ref.nChild>0){
+                double landToGive  = (ref.value.getTerras())/ref.nChild;
+                for (TreeNode child : ref.children) {
+                    if(child!= null)
+                        child.value.herdaTerraPai(landToGive);
+                        herda(child);
                 }
             }
         }
     }
-
 
 }

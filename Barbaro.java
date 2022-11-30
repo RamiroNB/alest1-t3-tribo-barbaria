@@ -2,10 +2,9 @@ public class Barbaro{
 
     private double terras;
     private String nome;
-    private int gen;
 
 
-    public Barbaro(String name, double land, int gen){
+    public Barbaro(String name, double land){
         this.nome =name;
         this.terras = land;
     }
@@ -17,14 +16,9 @@ public class Barbaro{
     public double getTerras() {
         return terras;
     }
-    public int getGen() {
-        return gen;
-    }
 
     public String getNome() {
         return nome;
     }
-
-    
 
 }
