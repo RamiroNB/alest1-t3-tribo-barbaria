@@ -1,16 +1,24 @@
 public class Barbaro{
 
-    private int terras;
+    private double terras;
     private String nome;
+    private int gen;
 
 
-    public Barbaro(String name, int land){
+    public Barbaro(String name, double land, int gen){
         this.nome =name;
         this.terras = land;
     }
 
-    public int getTerras() {
+    public void herdaTerraPai(double land){
+        this.terras = this.terras+land;
+    }
+
+    public double getTerras() {
         return terras;
+    }
+    public int getGen() {
+        return gen;
     }
 
     public String getNome() {
